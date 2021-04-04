@@ -5,24 +5,25 @@ from django.db import models
 #              latest/many_to_many.html
 class User(AbstractUser):
     #post = models.ManyToManyField('User', blank=True)
-    following = models.ManyToManyField('User', related_name='followers')
+    following = models.ManyToManyField('User', related_name='Followers', blank=True)
     pass
 
 
-class post(models.Model):
-    author = models.IntegerField()
+class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE,
+                                related_name="Posts")
     body = models.TextField()
     crt_dt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"user: {self.author} | post: {self.post}"
+        return f"user: {self.author} | body: {self.body}"
 
 
-class likes(models.Model):
+class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,
-                                related_name="likes")
-    liked_post =  models.ForeignKey(post, on_delete=models.CASCADE,
-                                related_name="likes") 
+                                related_name="Likes")
+    liked_post =  models.ForeignKey(Post, on_delete=models.CASCADE,
+                                related_name="Likes") 
     crt_dt = models.DateTimeField(auto_now_add=True)
   
     def __str__(self):
