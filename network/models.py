@@ -15,6 +15,12 @@ class Post(models.Model):
     body = models.TextField()
     crt_dt = models.DateTimeField(auto_now_add=True)
 
+    def num_likes(self):
+        """
+        calculate the number of likes for a post
+        """
+        return len(list(self.Likes.all()))
+
     def __str__(self):
         return f"user: {self.author} | body: {self.body}"
 
