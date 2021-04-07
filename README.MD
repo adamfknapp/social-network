@@ -54,3 +54,8 @@ Using Python, JavaScript, HTML, and CSS, complete the implementation of a social
 *   Django’s [Paginator](https://docs.djangoproject.com/en/3.0/topics/pagination/) class may be helpful for implementing pagination on the back-end (in your Python code).
 *   Bootstrap’s [Pagination](https://getbootstrap.com/docs/4.4/components/pagination/) features may be helpful for displaying pages on the front-end (in your HTML).
 *   You do not need to use React to complete this assignment but if you plan to use it on your final, this is a great opportunity to practice!
+
+
+## References
+
+* Modal pop up for post entry based on https://www.w3schools.com/howto/howto_css_modals.asp
