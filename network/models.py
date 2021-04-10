@@ -12,7 +12,7 @@ class User(AbstractUser):
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                 related_name="Posts")
-    body = models.TextField()
+    content = models.TextField()
     crt_dt = models.DateTimeField(auto_now_add=True)
 
     def num_likes(self):
@@ -22,7 +22,7 @@ class Post(models.Model):
         return len(list(self.Likes.all()))
 
     def __str__(self):
-        return f"user: {self.author} | body: {self.body}"
+        return f"user: {self.author} | content: {self.content}"
 
 
 class Like(models.Model):

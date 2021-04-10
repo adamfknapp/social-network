@@ -6,17 +6,22 @@
 
 <!-- Trigger/Open The Modal -->
 <br>
-<button id="myBtn">New Post</button>
+<button id="postBtn">New Post</button>
 
 <!-- Modal for new post -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>entry form </p>
-    
-  </div>
+  <div id="newPostModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
 
-</div>
+      <div id="compose-view">
+          <h3>What's on your mind?</h3>
+          <form id="compose-form">
+              <textarea class="form-control" id="postContent" placeholder="Everything is Awesome!"> </textarea>
+              <input id="sendNewPost" type="button" class="btn btn-primary" value="Post"/>
+          </form>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
 

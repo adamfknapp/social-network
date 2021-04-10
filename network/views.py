@@ -73,17 +73,16 @@ def register(request):
 
 @csrf_exempt
 @login_required
-def compose(request):
+def newPost(request):
     
     # Compose must be a post message
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
 
     data = json.loads(request.body)
-    print(data)
     post = Post(
-        author = data.author,
-        body = data.body
+        author = request.user,
+        content = data.get("content", "")
         )
-    post.save()
+    print(post)
     return JsonResponse({"message": "Post successfull."}, status=201)
