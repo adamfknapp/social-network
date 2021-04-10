@@ -84,5 +84,4 @@ def newPost(request):
         author = request.user,
         content = data.get("content", "")
         )
-    print(post)
     return JsonResponse({"message": "Post successfull."}, status=201)

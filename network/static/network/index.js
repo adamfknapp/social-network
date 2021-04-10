@@ -40,9 +40,12 @@ function sendNewPost() {
     //Check if it is blank
     var completePost = true;
     if (content.length === 0) {
-        completePost = false
+        completePost = false;
+        alert('What say you?');
         } 
-
+    console.log(completePost);
+    console.log(content.length)
+   
     //submit post
     if (completePost) {
         fetch('/newPost', {
