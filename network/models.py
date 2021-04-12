@@ -17,12 +17,12 @@ class Post(models.Model):
 
     def num_likes(self):
         """
-        calculate the number of likes for a post
+        calculate the number of likes for a SINGLE post
         """
         return len(list(self.Likes.all()))
 
     def __str__(self):
-        return f"user: {self.author} | content: {self.content}"
+        return f"id: {self.id} | user: {self.author} | content: {self.content}"
 
 
 class Like(models.Model):
@@ -33,4 +33,4 @@ class Like(models.Model):
     crt_dt = models.DateTimeField(auto_now_add=True)
   
     def __str__(self):
-        return f"user: {self.user} | liked_post: {self.liked_post}"
+        return f"id: {self.id} | user: {self.user} "

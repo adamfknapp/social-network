@@ -70,34 +70,8 @@ function sendNewPost() {
 
 function getPosts() {
     const filter = 'all_posts';
-    fetch('/Post/user_only')
-      //.then(response => response.json())
-      //.then(data => {  
-      //    console.log(Object.values(data))   
-     // })
-      //.catch(err => alert(err))
-    }
-    
-// function add_post_to_view(posts){
-//         //
-//         // Create a row to be added to view
-//         //
-//         const row = document.createElement('div');
-//         row.classList.add('email-entry');
-        
-      
-//         if (email.read === true) {
-//           row.classList.add('email-read');
-//       }
-      
-//         row.innerHTML = `${email.id} <span class='email-sender'>${email.sender}</span>  <span class='email-subject'>${email.subject}</span>  <span class='email-timestamp'>${email.timestamp}</span>`;
-      
-//         //On email click
-//         row.addEventListener('click', function() {
-//           // get the current mailbox name
-//           const current_mailbox = document.querySelector('h3').innerHTML
-//           single_email_view(email.id, current_mailbox);  
-//         });
-      
-//         document.querySelector('#emails-view').append(row);
-//       }
+
+    fetch(`/Post/${filter}`)
+    .then(response => response.json())
+    .then(data => console.log(data));
+} 

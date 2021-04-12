@@ -110,22 +110,25 @@ def getPosts(request, filter):
 
     must paginate in groups of 10
     """
+
     items_per_page = 10
 
     if filter == 'all_posts':
-        posts = Post.objects.all(
+        posts = Like.objects.select_related(
         )
+        #likes = Like.objects.all()
+        #print(likes)
     elif filter =='user_only':
         posts = Post.objects.filter(
             author=request.user
         )
-    elif filter =='following_only':
-        # revise to:
-        # 1- determine who the current user is following
-        # 2- filter by those users 
-        posts = Post.objects.filter(
-            author=request.user_only
-        )  
+    # elif filter =='following_only':
+    #     # revise to:
+    #     # 1- determine who the current user is following
+    #     # 2- filter by those users 
+    #     posts = Post.objects.filter(
+    #         author=request.user
+    #     )  
     else:
         return JsonResponse({"error": "Invalid filter."}, status=400)      
 
@@ -137,6 +140,5 @@ def getPosts(request, filter):
     #return JsonResponse([email.serialize() for email in emails], safe=False)
     #page_data = 
     #user=request.user, recipients=request.user, archived=False
-    print('===  view sucessfull ===')
     print(posts)
-    return posts
+    return JsonResponse(list(posts.values()), safe=False)
