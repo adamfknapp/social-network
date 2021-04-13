@@ -1,4 +1,6 @@
 import json
+from itertools import chain
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -106,7 +108,7 @@ def getPosts(request, filter):
     """
     return requiered Posts based on filter. 
     Three filter options are availible
-    all_posts, user_only, following_only
+    all_posts, current_user_only, following_only
 
     must paginate in groups of 10
     """
@@ -114,15 +116,23 @@ def getPosts(request, filter):
     items_per_page = 10
 
     if filter == 'all_posts':
-        posts = Like.objects.select_related(
-        )
-        #likes = Like.objects.all()
-        #print(likes)
-    elif filter =='user_only':
+        posts = Post.objects.all()
+    elif filter =='current_user_only':
         posts = Post.objects.filter(
             author=request.user
         )
-    # elif filter =='following_only':
+    elif filter =='following_only':
+        # determine who the current user is following
+        users = User.objects.filter(
+            username = request.user
+            )
+        for user in users:
+            print(user.username)
+            print(user.Followers)
+            print(user.following)
+        
+        posts = Post.objects.all()
+        #posts = User.objects.values_list('following', flat=True)
     #     # revise to:
     #     # 1- determine who the current user is following
     #     # 2- filter by those users 
@@ -140,5 +150,5 @@ def getPosts(request, filter):
     #return JsonResponse([email.serialize() for email in emails], safe=False)
     #page_data = 
     #user=request.user, recipients=request.user, archived=False
-    print(posts)
+   
     return JsonResponse(list(posts.values()), safe=False)

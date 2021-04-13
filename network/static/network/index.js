@@ -69,7 +69,7 @@ function sendNewPost() {
     }
 
 function getPosts() {
-    const filter = 'all_posts';
+    const filter = 'following_only';
 
     fetch(`/Post/${filter}`)
     .then(response => response.json())
