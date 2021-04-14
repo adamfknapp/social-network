@@ -1,13 +1,16 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# See: https://books.agiliq.com/projects/django-orm-cookbook/en/
+# See: 
+#    - https://books.agiliq.com/projects/django-orm-cookbook/en/
 #              latest/many_to_many.html
+#    - https://simpleisbetterthancomplex.com/tutorial/2016/07/22/
+#               how-to-extend-django-user-model.html#abstractuser 
+#    - https://learndjango.com/tutorials/django-custom-user-model 
 class User(AbstractUser):
-    #post = models.ManyToManyField('User', blank=True)
-    following = models.ManyToManyField('User', related_name='Followers', blank=True)
     pass
-
+    following = models.ManyToManyField('User', related_name='Followers', blank=True)
+    
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,

@@ -1,5 +1,4 @@
 import json
-from itertools import chain
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -116,39 +115,24 @@ def getPosts(request, filter):
     items_per_page = 10
 
     if filter == 'all_posts':
-        posts = Post.objects.all()
+        posts = Post.objects.all(
+        )
     elif filter =='current_user_only':
         posts = Post.objects.filter(
             author=request.user
         )
     elif filter =='following_only':
-        # determine who the current user is following
-        users = User.objects.filter(
-            username = request.user
-            )
-        for user in users:
-            print(user.username)
-            print(user.Followers)
-            print(user.following)
+        # get who the user is following
+        print(f'following -> {list(request.user.following.all())}')
         
+        # filter for any posts in that list 
+        # can this be an in statement?
+
         posts = Post.objects.all()
-        #posts = User.objects.values_list('following', flat=True)
-    #     # revise to:
-    #     # 1- determine who the current user is following
-    #     # 2- filter by those users 
-    #     posts = Post.objects.filter(
-    #         author=request.user
-    #     )  
+
     else:
         return JsonResponse({"error": "Invalid filter."}, status=400)      
 
     
-    #paginate results
-
-    # Return emails in reverse chronologial order
-    #emails = emails.order_by("-timestamp").all()
-    #return JsonResponse([email.serialize() for email in emails], safe=False)
-    #page_data = 
-    #user=request.user, recipients=request.user, archived=False
    
     return JsonResponse(list(posts.values()), safe=False)
