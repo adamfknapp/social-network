@@ -123,10 +123,13 @@ def getPosts(request, filter):
         )
     elif filter =='following_only':
         # get who the user is following
-        print(f'following -> {list(request.user.following.all())}')
+        following_lst =[]
+        for following in request.user.following.all():
+            following_lst.append(str(following))
+        
+        
         
         # filter for any posts in that list 
-        # can this be an in statement?
 
         posts = Post.objects.all()
 
