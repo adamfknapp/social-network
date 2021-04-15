@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
+from django.core import serializers
 
 from .models import User, Post, Like
 
@@ -122,17 +123,15 @@ def getPosts(request, filter):
             author=request.user
         )
     elif filter =='following_only':
-        # get who the user is following
+        # This is hacky but it works
         following_lst =[]
-        for following in request.user.following.all():
-            following_lst.append(str(following))
-        
-        
-        
-        # filter for any posts in that list 
-
-        posts = Post.objects.all()
-
+        for obj in json.loads(serializers.serialize("json",
+                        request.user.following.all())):
+            following_lst.append(obj['pk']
+            )
+        posts = Post.objects.filter(
+            author_id__in=following_lst
+        )
     else:
         return JsonResponse({"error": "Invalid filter."}, status=400)      
 
