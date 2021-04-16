@@ -104,7 +104,7 @@ def newPost(request):
 
 
 @login_required
-def getPosts(request, filter):
+def getPosts(request, filter, page_num):
     """
     return requiered Posts based on filter. 
     Three filter options are availible
@@ -115,13 +115,14 @@ def getPosts(request, filter):
 
     items_per_page = 10
 
+    # Get posts based on filter
     if filter == 'all_posts':
         posts = Post.objects.all(
-        )
+        ).order_by('-crt_dt')
     elif filter =='current_user_only':
         posts = Post.objects.filter(
             author=request.user
-        )
+        ).order_by('-crt_dt')
     elif filter =='following_only':
         # This is hacky but it works
         following_lst =[]
@@ -131,10 +132,17 @@ def getPosts(request, filter):
             )
         posts = Post.objects.filter(
             author_id__in=following_lst
-        )
+        ).order_by('-crt_dt')
     else:
         return JsonResponse({"error": "Invalid filter."}, status=400)      
 
+    # Paginate posts 
+    p = Paginator(posts, items_per_page)
     
+    # return results if the page number exists
+    if page_num in p.page_range:
+        return JsonResponse(list(p.page(page_num).object_list.values()), safe=False)
+    else:
+        return JsonResponse({"error": "Invalid page number."}, status=400)
    
-    return JsonResponse(list(posts.values()), safe=False)
+    

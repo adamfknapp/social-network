@@ -69,9 +69,9 @@ function sendNewPost() {
     }
 
 function getPosts() {
-    const filter = 'following_only';
-
-    fetch(`/Post/${filter}`)
+    const filter = 'all_posts';
+    const page_num = 2;
+    fetch(`Post/${filter}/${page_num}/`)
     .then(response => response.json())
     .then(data => console.log(data));
 } 
