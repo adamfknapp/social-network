@@ -70,7 +70,7 @@ function sendNewPost() {
 
 function getPosts() {
     const filter = 'all_posts';
-    const page_num = 2;
+    const page_num = 1;
     fetch(`Post/${filter}/${page_num}/`)
     .then(response => response.json())
     .then(data => console.log(data));
