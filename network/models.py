@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from datetime import datetime
 
 # See: 
 #    - https://books.agiliq.com/projects/django-orm-cookbook/en/
@@ -19,10 +20,16 @@ class Post(models.Model):
     crt_dt = models.DateTimeField(auto_now_add=True)
 
     def num_likes(self):
-        """
-        calculate the number of likes for a SINGLE post
-        """
-        return len(list(self.Likes.all()))
+        return self.Likes.count()
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'author': self.author.username,
+            'content': self.content,
+            'likes': self.Likes.count(),
+            'crt_dt': self.crt_dt.strftime('%m/%d/%Y')
+        }
 
     def __str__(self):
         return f"id: {self.id} | user: {self.author} | content: {self.content}"
