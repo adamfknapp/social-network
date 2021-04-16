@@ -149,16 +149,8 @@ def getPosts(request, filter, page_num):
                         , ('cur_page', page_num)
                         , ('has_next', p.page(page_num).has_next())
                         , ('has_prev', p.page(page_num).has_previous())
-                        , ('objects',list(p.page(page_num).object_list.values()) )
+                        , ('objects',  list(post.serialize() for post in p.page(page_num)))
                         ])
-        print('===')
-        print(' ')
-        #print(serializers.serialize('json',p.page(page_num).object_list.all()))
-        #return JsonResponse([email.serialize() for email in emails], safe=False)
-        print(list(post.serialize() for post in posts))
-        print(' ')
-        print('===')
-
         return JsonResponse(response, safe=False)
     else:
         return JsonResponse({"error": "Invalid page number."}, status=400)
