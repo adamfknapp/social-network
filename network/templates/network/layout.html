@@ -22,15 +22,17 @@
               <ul class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><strong>{{ user.username }}</strong></a>
+                        <a id="lnkProfile" class="nav-link" href="#"><strong>{{ user.username }}</strong></a>
                     </li>
                 {% endif %}
+
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+                  <a id="lnkAllPosts" class="nav-link" href="#">All Posts</a>
                 </li>
+
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a id="btnFollowing" class="nav-link" href="{% url 'following' %}">Following</a>
+                        <a id="lnkFollowing" class="nav-link" href="#"">Following</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Log Out</a>

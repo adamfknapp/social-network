@@ -6,11 +6,19 @@ document.addEventListener('DOMContentLoaded', function() {
     //submit new post
     document.querySelector('#sendNewPost').addEventListener('click', () => sendNewPost());
   
-    //submit new post
-    document.querySelector('#btnFollowing').addEventListener('click', () => {
+    document.querySelector('#lnkProfile').addEventListener('click', () => {
+      console.log('Profile clicked');
+    });
+
+  document.querySelector('#lnkAllPosts').addEventListener('click', () => listPosts('All Posts', 'all_posts', 1));
+    // document.querySelector('#lnkAllPosts').addEventListener('click', () => {
+    //   console.log('All posts clicked');
+    // });
+  
+    document.querySelector('#lnkFollowing').addEventListener('click', () => {
       console.log('FOLLOWING CLICKED');
-    })
-    //listPosts('following_only',1));
+    });
+   
   
   });
 
@@ -71,14 +79,16 @@ function sendNewPost() {
     }
 
 
-function listPosts(filter, page_num) {
+function listPosts(headline, filter, page_num) {
   
+
+
   // Get the data
   fetch(`Post/${filter}/${page_num}/`)
     .then(response => response.json())
     .then(data => {
-      console.log(data);
-      data.forEach(posts2view);
+      //console.log(data['objects']);
+      data['objects'].forEach(posts2view);
     })
 } 
 
@@ -89,9 +99,9 @@ function posts2view(post){
   const row = document.createElement('div');
   row.classList.add('post-entry');
 
-  row.innerHTML = `<span class='postAuthor'> ${post.author}</span> <span class='postContent'> ${post.content}</span> <span class='postLikes'>${likes}</span> <span class='postCrt_dt'>${crt_dt}</span>`;
-
-  document.querySelector('#post-view').append(row);
+  row.innerHTML = `<span class='postAuthor'> ${post.author}</span> <span class='postContent'> ${post.content}</span> <span class='postLikes'>${post.likes}</span> <span class='postCrt_dt'>${post.crt_dt}</span>`;
+ 
+  document.querySelector('#posts-view').append(row);
 }
 
 
