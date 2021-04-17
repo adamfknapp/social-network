@@ -112,7 +112,7 @@ def getPosts(request, filter, page_num):
 
     must paginate in groups of 10
     """
-
+    print(f'triggered getPosts | {filter} | {page_num}')
     items_per_page = 10
 
     # Get posts based on filter
@@ -139,7 +139,6 @@ def getPosts(request, filter, page_num):
     else:
         return JsonResponse({"error": "Invalid filter."}, status=400)      
 
-    print(posts)
     # Paginate posts 
     p = Paginator(posts, items_per_page)
     if page_num in p.page_range:
