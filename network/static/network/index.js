@@ -10,14 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Profile clicked');
     });
 
-  document.querySelector('#lnkAllPosts').addEventListener('click', () => listPosts('All Posts', 'all_posts', 1));
-    // document.querySelector('#lnkAllPosts').addEventListener('click', () => {
-    //   console.log('All posts clicked');
-    // });
+    document.querySelector('#lnkProfile').addEventListener('click', () => listPosts('Profile', 'user_posts', 1));
+
+    document.querySelector('#lnkAllPosts').addEventListener('click', () => listPosts('All Posts', 'all_posts', 1));
   
-    document.querySelector('#lnkFollowing').addEventListener('click', () => {
-      console.log('FOLLOWING CLICKED');
-    });
+    document.querySelector('#lnkFollowing').addEventListener('click', () => listPosts('Following', 'following_only', 1));
+
    
   
   });
@@ -80,9 +78,16 @@ function sendNewPost() {
 
 
 function listPosts(headline, filter, page_num) {
+  //
+  // List all posts on page
+  //
+
+  //clear data on the page
+  document.querySelector('#posts-view').innerHTML = ``;
+
+  //set page heading
+  document.querySelector('#pageHeader').innerHTML = `<h1>${headline}</h1>`;
   
-
-
   // Get the data
   fetch(`Post/${filter}/${page_num}/`)
     .then(response => response.json())
@@ -103,31 +108,3 @@ function posts2view(post){
  
   document.querySelector('#posts-view').append(row);
 }
-
-
-//**************************************************************
-//**************************************************************
-
-// function add_posts_to_view(email){
-//   //
-//   // Create a row to be added to view
-//   //
-//   const row = document.createElement('div');
-//   row.classList.add('email-entry');
-  
-
-//   if (email.read === true) {
-//     row.classList.add('email-read');
-// }
-
-//   row.innerHTML = `${email.id} <span class='email-sender'>${email.sender}</span>  <span class='email-subject'>${email.subject}</span>  <span class='email-timestamp'>${email.timestamp}</span>`;
-
-//   //On email click
-//   row.addEventListener('click', function() {
-//     // get the current mailbox name
-//     const current_mailbox = document.querySelector('h3').innerHTML
-//     single_email_view(email.id, current_mailbox);  
-//   });
-
-//   document.querySelector('#emails-view').append(row);
-// }

@@ -120,7 +120,7 @@ def getPosts(request, filter, page_num):
         posts = Post.objects.all(
         ).order_by('-crt_dt')
 
-    elif filter =='current_user_only':
+    elif filter =='user_posts':
         posts = Post.objects.filter(
             author=request.user
         ).order_by('-crt_dt')

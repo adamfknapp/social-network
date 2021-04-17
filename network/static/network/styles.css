@@ -37,4 +37,15 @@
     text-decoration: none;
     cursor: pointer;
   }
-  
+
+/* format posts */
+  .post-entry {
+    border-bottom: 0.05em solid lightslategray;
+    cursor: pointer;
+    margin: .25em;
+    width: 75%;
+}
+
+  .post-entry:hover{
+    background-color: lightskyblue;
+}
