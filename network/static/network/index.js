@@ -89,7 +89,7 @@ function listPosts(headline, filter, page_num) {
   document.querySelector('#pageHeader').innerHTML = `<h1>${headline}</h1>`;
   
   // Get the data
-  fetch(`Post/${filter}/${page_num}/`)
+  fetch(`Posts/?filter=${filter}&page_num=${page_num}`)
     .then(response => response.json())
     .then(data => {
       //console.log(data['objects']);

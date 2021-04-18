@@ -104,7 +104,7 @@ def newPost(request):
 
 
 @login_required
-def getPosts(request, filter, page_num):
+def getPosts(request):
     """
     return requiered Posts based on filter. 
     Three filter options are availible
@@ -112,7 +112,9 @@ def getPosts(request, filter, page_num):
 
     must paginate in groups of 10
     """
-    print(f'triggered getPosts | {filter} | {page_num}')
+    filter = request.GET.get('filter') or 'all_posts'
+    page_num = request.GET.get('page_num') or 1
+
     items_per_page = 10
 
     # Get posts based on filter
