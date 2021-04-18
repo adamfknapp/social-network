@@ -94,13 +94,11 @@ function listPosts(headline, filter, page_num, author) {
       //console.log(data['objects']);
       data['objects'].forEach(posts2view);
       pagination_buttons(data);
-      han
     })
 } 
 
 
 function pagination_buttons(data){
-  console.log(data)
     
     //Define buttons
     const nxt_pg_btn = document.createElement('button'); 
@@ -111,7 +109,12 @@ function pagination_buttons(data){
     prv_pg_btn.id = 'btnPrvPage';
     prv_pg_btn.innerHTML='< Prev';
 
-    //disable buttons if needed
+    // Add event listeners
+    // to incriment the page number
+    nxt_pg_btn.addEventListener('click', () => change_page(data, 1));
+    prv_pg_btn.addEventListener('click', () => change_page(data,-1));
+
+    // Disable buttons if needed
     nxt_pg_btn.disabled=false;
     if (data['has_next']===false){
       nxt_pg_btn.disabled=true;
@@ -127,7 +130,12 @@ function pagination_buttons(data){
     document.querySelector('#posts-view').append(nxt_pg_btn);
 }
 
-
+function change_page(data, inc){
+    //get headline
+    const headline = document.querySelector('#pageHeader').innerText; 
+    listPosts(headline, data['filter'], data['cur_page']+inc,
+                `${data['author']}` ); 
+}
 
 function posts2view(post){
   //
