@@ -68,7 +68,8 @@ function sendNewPost() {
         })
         .then(response => response.json())
         .then(data => {     
-            alert(Object.values(data))
+          document.querySelector('#postContent').value ='';
+          document.getElementById("newPostModal").style.display = "none";
         })
         .catch(err => alert(err))
         } 
@@ -87,6 +88,13 @@ function listPosts(headline, filter, page_num, author) {
   //set page heading
   document.querySelector('#pageHeader').innerHTML = `<h1>${headline}</h1>`;
   
+  //add follower data if profile
+  if(headline.includes('Profile')){
+    const row = document.createElement('div');
+    row.classList.add('follower-data');
+   // row.innerHTML =
+  };
+
   // Get the data
   fetch(`Post/${filter}/${page_num}/${author}/`)
     .then(response => response.json())
