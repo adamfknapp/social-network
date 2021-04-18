@@ -147,6 +147,8 @@ def getPosts(request, filter, page_num, author):
                         , ('filter', filter)
                         , ('num_pages', p.num_pages)
                         , ('num_objects', p.count)
+                        , ('num_following', 77)
+                        , ('num_followers', 99)
                         , ('cur_page', page_num)
                         , ('has_next', p.page(page_num).has_next())
                         , ('has_prev', p.page(page_num).has_previous())

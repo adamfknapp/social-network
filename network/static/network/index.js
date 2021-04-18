@@ -87,23 +87,28 @@ function listPosts(headline, filter, page_num, author) {
 
   //set page heading
   document.querySelector('#pageHeader').innerHTML = `<h1>${headline}</h1>`;
-  
-  //add follower data if profile
-  if(headline.includes('Profile')){
-    const row = document.createElement('div');
-    row.classList.add('follower-data');
-   // row.innerHTML =
-  };
 
   // Get the data
   fetch(`Post/${filter}/${page_num}/${author}/`)
     .then(response => response.json())
     .then(data => {
-      //console.log(data['objects']);
+      //add follower information if a profile page
+      if(document.querySelector('#pageHeader').innerText.includes('Profile')){
+        followers(data);
+        }
       data['objects'].forEach(posts2view);
       pagination_buttons(data);
     })
 } 
+
+function followers(data){
+    //add follower data if profile
+    console.log(data)
+      const row = document.createElement('div');
+      row.classList.add('follower-data');
+      row.innerHTML = `<span class='follower_data'>Following: ${data['num_following']} | Followers: ${data['num_followers']}</span>`
+      document.querySelector('#posts-view').append(row);
+    };
 
 
 function pagination_buttons(data){
