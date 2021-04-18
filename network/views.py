@@ -104,7 +104,7 @@ def newPost(request):
 
 
 @login_required
-def getPosts(request, filter, page_num):
+def getPosts(request, filter, page_num, author):
     """
     return requiered Posts based on filter. 
     Three filter options are availible
@@ -112,7 +112,7 @@ def getPosts(request, filter, page_num):
 
     must paginate in groups of 10
     """
-    print(f'triggered getPosts | {filter} | {page_num}')
+    print(f'views_author: {author}')
     items_per_page = 10
 
     # Get posts based on filter
@@ -122,7 +122,7 @@ def getPosts(request, filter, page_num):
 
     elif filter =='user_posts':
         posts = Post.objects.filter(
-            author=request.user
+            author__username = f'{author}'
         ).order_by('-crt_dt')
 
     elif filter =='following_only':

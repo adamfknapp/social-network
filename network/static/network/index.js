@@ -5,12 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //submit new post
     document.querySelector('#sendNewPost').addEventListener('click', () => sendNewPost());
-  
-    document.querySelector('#lnkProfile').addEventListener('click', () => {
-      console.log('Profile clicked');
-    });
 
-    document.querySelector('#lnkProfile').addEventListener('click', () => listPosts('Profile', 'user_posts', 1));
+    document.querySelector('#lnkProfile').addEventListener('click', () => {
+      const author = document.querySelector('#lnkProfile').textContent  
+      listPosts(`Profile: ${author}`, 'user_posts', 1, author )
+      });
 
     document.querySelector('#lnkAllPosts').addEventListener('click', () => listPosts('All Posts', 'all_posts', 1));
   
@@ -77,7 +76,7 @@ function sendNewPost() {
     }
 
 
-function listPosts(headline, filter, page_num) {
+function listPosts(headline, filter, page_num, author) {
   //
   // List all posts on page
   //
@@ -89,7 +88,7 @@ function listPosts(headline, filter, page_num) {
   document.querySelector('#pageHeader').innerHTML = `<h1>${headline}</h1>`;
   
   // Get the data
-  fetch(`Post/${filter}/${page_num}/`)
+  fetch(`Post/${filter}/${page_num}/${author}/`)
     .then(response => response.json())
     .then(data => {
       //console.log(data['objects']);
@@ -104,7 +103,13 @@ function posts2view(post){
   const row = document.createElement('div');
   row.classList.add('post-entry');
 
-  row.innerHTML = `<span class='postAuthor'> ${post.author}</span> <span class='postContent'> ${post.content}</span> <span class='postLikes'>${post.likes}</span> <span class='postCrt_dt'>${post.crt_dt}</span>`;
+  row.innerHTML = `<span id='lnkPostProfile' class='postAuthor'> ${post.author}</span> <span class='postContent'> ${post.content}</span> <span class='postLikes'>${post.likes}</span> <span class='postCrt_dt'>${post.crt_dt}</span>`;
+
+  //On profile click get profile by name
+  row.addEventListener('click', function() {
+      listPosts(`Profile: ${post.author}`, 'user_posts', 1, `${post.author}` ); 
+      });
+
  
   document.querySelector('#posts-view').append(row);
 }

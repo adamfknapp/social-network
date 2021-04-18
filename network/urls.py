@@ -12,5 +12,5 @@ urlpatterns = [
 
     # API Routes
     path("Post", views.newPost, name="newPost"),
-    path("Post/<str:filter>/<int:page_num>/", views.getPosts, name="getPosts"),
+    path("Post/<str:filter>/<int:page_num>/<str:author>/", views.getPosts, name="getPosts"),
 ]
