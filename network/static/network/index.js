@@ -93,8 +93,41 @@ function listPosts(headline, filter, page_num, author) {
     .then(data => {
       //console.log(data['objects']);
       data['objects'].forEach(posts2view);
+      pagination_buttons(data);
+      han
     })
 } 
+
+
+function pagination_buttons(data){
+  console.log(data)
+    
+    //Define buttons
+    const nxt_pg_btn = document.createElement('button'); 
+    nxt_pg_btn.id = 'btnNxtPage';
+    nxt_pg_btn.innerHTML='Next >';
+
+    const prv_pg_btn = document.createElement('button'); 
+    prv_pg_btn.id = 'btnPrvPage';
+    prv_pg_btn.innerHTML='< Prev';
+
+    //disable buttons if needed
+    nxt_pg_btn.disabled=false;
+    if (data['has_next']===false){
+      nxt_pg_btn.disabled=true;
+    }
+
+    prv_pg_btn.disabled=false;
+    if (data['has_prev']===false){
+      prv_pg_btn.disabled=true;
+    }
+
+    // Add buttons to screen
+    document.querySelector('#posts-view').append(prv_pg_btn);
+    document.querySelector('#posts-view').append(nxt_pg_btn);
+}
+
+
 
 function posts2view(post){
   //
@@ -103,7 +136,7 @@ function posts2view(post){
   const row = document.createElement('div');
   row.classList.add('post-entry');
 
-  row.innerHTML = `<span id='lnkPostProfile' class='postAuthor'> ${post.author}</span> <span class='postContent'> ${post.content}</span> <span class='postLikes'>${post.likes}</span> <span class='postCrt_dt'>${post.crt_dt}</span>`;
+  row.innerHTML = `<span id='lnkPostProfile' class='postAuthor'> ${post.author}</span> <span class='postContent'> ${post.content}</span> <span class='postLikes'>Likes: ${post.likes}</span> <span class='postCrt_dt'>Created: ${post.crt_dt}</span>`;
 
   //On profile click get profile by name
   row.addEventListener('click', function() {

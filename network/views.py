@@ -143,7 +143,9 @@ def getPosts(request, filter, page_num, author):
     p = Paginator(posts, items_per_page)
     if page_num in p.page_range:
         response = dict([
-                        ('num_pages', p.num_pages)
+                          ('author', author)
+                        , ('filter', filter)
+                        , ('num_pages', p.num_pages)
                         , ('num_objects', p.count)
                         , ('cur_page', page_num)
                         , ('has_next', p.page(page_num).has_next())
