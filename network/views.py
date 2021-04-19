@@ -114,6 +114,12 @@ def getPosts(request, filter, page_num, author):
     """
     items_per_page = 10
 
+    #determine who the user is following
+    following_lst =[]
+    for obj in json.loads(serializers.serialize("json",
+                        request.user.following.all())):
+            following_lst.append(obj['pk'])
+
     # Get posts based on filter
     if filter == 'all_posts':
         posts = Post.objects.all(
@@ -125,16 +131,10 @@ def getPosts(request, filter, page_num, author):
         ).order_by('-crt_dt')
 
     elif filter =='following_only':
-        # This is hacky but it works
-        following_lst =[]
-        for obj in json.loads(serializers.serialize("json",
-                        request.user.following.all())):
-            following_lst.append(obj['pk']
-            )
         posts = Post.objects.filter(
             author_id__in=following_lst
         ).order_by('-crt_dt')
-
+    
     else:
         return JsonResponse({"error": "Invalid filter."}, status=400)      
 
@@ -147,6 +147,7 @@ def getPosts(request, filter, page_num, author):
                         , ('num_pages', p.num_pages)
                         , ('num_objects', p.count)
                         , ('num_following', request.user.following.count()) 
+                        , ('lst_following', following_lst )
                         , ('num_followers', request.user.Followers.count())
                         , ('cur_page', page_num)
                         , ('has_next', p.page(page_num).has_next())

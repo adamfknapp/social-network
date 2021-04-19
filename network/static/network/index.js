@@ -102,12 +102,15 @@ function listPosts(headline, filter, page_num, author) {
 } 
 
 function followers(data){
-    //add follower data if profile
-    console.log(data)
-      const row = document.createElement('div');
+    //add follower data if profile page
+    console.log(data)  
+    const row = document.createElement('div');
+      
       row.classList.add('follower-data');
       row.innerHTML = `<span class='follower_data'>Following: ${data['num_following']} | Followers: ${data['num_followers']}</span>`
       document.querySelector('#posts-view').append(row);
+
+ 
     };
 
 
